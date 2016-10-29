@@ -1,5 +1,6 @@
-	local const = require "private.constants" -- Удалите(или закомментируйте) эту строку
+	local const = require "private.constants" -- comment or remove this line
 	
+	-- populate your own sencitive data
 	return {
 		accoun				= const.account				
 		,client_code		= const.client_code			
