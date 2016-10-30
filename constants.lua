@@ -2,7 +2,7 @@
 	
 	-- populate your own sencitive data
 	return {
-		accoun				= const.account				
+		account				= const.account				
 		,client_code		= const.client_code			
 		,firm_id			= const.firm_id				
 		,tag				= const.tag					
