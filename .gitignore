@@ -1,2 +1,6 @@
 private/
 *.txt
+data/
+mobdebug.lua
+socket.lua
+trades.dat
