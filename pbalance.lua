@@ -3,7 +3,6 @@ package.cpath = gPath .. "\\?.dll;" .. package.cpath
 package.path = gPath .. "\\?.lua;" .. package.path 
 local core = require "core"
 local const = require "constants"
-
 	
 is_run = true
 
