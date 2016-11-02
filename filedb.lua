@@ -1,7 +1,9 @@
 local db = {}
+local currentFileName
 db.trades = {}
 
 function db.Load(fileName)
+	currentFileName = fileName
 	dofile(fileName)
 end
 
@@ -13,15 +15,31 @@ function db.trades.isCorrectTrade(t)
 	return true
 end
 
+function db.trades.Save(entity)
+	if currentFileName == nil then
+		error("DB not initialized")
+		return
+	end
+	
+	local file, errorMsg = io.open(currentFileName, "a+")
+	if file == nil then
+		error(errorMsg)
+	end
+	str = Serialize(entity, "Trade")
+	io.output(file)
+	io.write(str)
+	io.close(file)
+end
+
 function db.trades.Add(t)
 	if db.trades.isCorrectTrade(t) == false then
 		return
 	end
 	
 	if db.trades[t.trade_num] == nil then
-		message("New trade")
-	else
-		message("Not New trade")
+		message("Save new trades")
+		db.trades[t.trade_num] = t
+		db.trades.Save(t)
 	end
 end
 
@@ -41,7 +59,7 @@ local function KeyToStr(key)
 	end
 end
 
-local function Serialize(t, entityName)
+function Serialize(t, entityName)
 	if type(t) ~= "table" then
 		return nil
 	end
