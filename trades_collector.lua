@@ -3,30 +3,27 @@ package.cpath = gPath .. "\\?.dll;" .. package.cpath
 package.path = gPath .. "\\?.lua;" .. package.path
 
 local core = require "core"
-local db = require "filedb"
+local filedb = require "filedb"
+local db = filedb.Load(gPath.."\\data\\trades.dat")
 
 local is_run = true
 local delay = 10000
 
 function main()
-	--while is_run do
-	--	OnTrade({a=1, b="SBERP", c=3, d = {aa = 1, bb = 2}, [1] = "1111"})
-		db.Load("data\\trades.dat")
-		
-		for k, v in pairs(db.trades) do
-			if type(v) ~= "function" then
-				message(tostring(k)..' : '..tostring(core.TableToStr(v)), 1)
-			end
-		end
-		
-		db.trades.Add({["trade_num"]=1234588,["a"]=1,["c"]=3,["b"]="SBERP",[1]="1111",["d"]={["aa"]=1,["bb"]=2,},})
-		
-	--	sleep(delay)
-	--end	
+	while is_run do
+		sleep(delay)
+	end
 end
 
 function OnTrade(trade)
-	core.LogToFile("data\\trades.dat", filedb.Serialize(trade, "Trade"))
+	-- Сохраняем только исполненные не активные сделки
+	if trade.flags 
+		and bit.band(trade.flags, 0x1) == 0 			-- 0 - сделка не активна
+		and bit.band(trade.flags, 0x2) == 0 then		-- 0 - сделка исполнена
+		
+		-- Добавляем новую сделку, если она еще не добавлена
+		db.Add(trade, "trade", "trade_num")
+	end
 end
 
 function OnStop()
