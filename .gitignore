@@ -4,3 +4,5 @@ data/
 mobdebug.lua
 socket.lua
 trades.dat
+sql/
+test.lua

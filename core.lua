@@ -18,10 +18,14 @@ end
 
 local function TableToStr(t)
 	local s = ""
+	if type(t) ~= "table" then
+		return nil
+	end
+	
 	for k, v in pairs(t) do
 		if type(v) == "table" then
 			s = s..tostring(k)..": ".."{"..TableToStr(v).."}\n"
-		else
+		elseif type(v) ~= "function" then
 			s = s..tostring(k)..": "..tostring(v).."\n"
 		end
 	end
@@ -67,7 +71,7 @@ local function GetDepoLimits(firm_id, client_code, class_code, portfolio_securit
 		0, 
 		getNumberOf("depo_limits")-1,
 		function (t)
-			if t.firmid == firm_id and t.client_code == client_code and t.limit_kind == 0 and allowedSecurities[t.sec_code] ~= nil  then
+			if t.firmid == firm_id and t.client_code == client_code and t.limit_kind == 2 and allowedSecurities[t.sec_code] ~= nil  then
 				return true
 			else
 				return false
