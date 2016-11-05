@@ -55,14 +55,14 @@ local function SerializeEntity(t)
 end
 
 function db.Save(t)
-	
-	local file, errorMsg = io.open(currentFileName, "a+")
-	if not file then
-		error(errorMsg)
-	end
-	
 	str = SerializeEntity(t)
+  
+  if not str then
+    return
+  end
 	
+  local file = assert(io.open(currentFileName, "a+"))
+
 	io.output(file)
 	io.write(str)
 	io.close(file)
