@@ -4,7 +4,7 @@ package.path = gPath .. "\\?.lua;" .. package.path
 
 local core = require "core"
 local filedb = require "filedb"
-local db = filedb.Load(gPath.."\\data\\trades.dat")
+local db = filedb.Load(gPath.."\\data\\db.dat")
 
 local is_run = true
 local delay = 10000
