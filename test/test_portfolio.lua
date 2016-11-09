@@ -1,5 +1,5 @@
 luaunit = require('test.luaunit')
-portfolio = require('portfolio')
+portfolio = require('portfolio').Load("data\\db.dat")
 
 TestPortfolio = {}
 
@@ -16,10 +16,11 @@ function TestPortfolio:testGetBalancesReturnsTable()
   luaunit.assertIsTable(balances)
   
   for k,v in pairs(balances) do
-    if not v.sec_code and not v.qty or not v.value or not v.avgLotPrice then
+    if not v.qty or not v.value or not v.avgLotPrice then
       luaunit.assertEquals(1, 0)
     end
     luaunit.assertEquals(1, 1)
+    print(k..": qty: "..v.qty..", value: "..v.value..", avg: "..v.avgLotPrice.."\n")
   end
 end
 
@@ -31,7 +32,7 @@ function TestPortfolio:testGetBalanceBySec_CodeReturnsTable()
   local balanceSBERP = portfolio.GetBalance("SBERP")
   luaunit.assertIsTable(balanceSBERP)
   
-  if not balanceSBERP.sec_code and not balanceSBERP.qty or not balanceSBERP.value or not balanceSBERP.avgLotPrice then
+  if not balanceSBERP.qty or not balanceSBERP.value or not balanceSBERP.avgLotPrice then
       luaunit.assertEquals(1, 0)
     end
     luaunit.assertEquals(1, 1)
