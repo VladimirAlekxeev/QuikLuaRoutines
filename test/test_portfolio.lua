@@ -1,4 +1,4 @@
-luaunit = require('test.luaunit')
+luaunit = require('luaunit')
 portfolio = require('portfolio').Load("data\\db.dat")
 
 TestPortfolio = {}
